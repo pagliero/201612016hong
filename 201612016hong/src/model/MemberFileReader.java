@@ -27,7 +27,8 @@ public class MemberFileReader {
 			m.setContact(strArr[6]);
 			m.setGender(strArr[7]);
 			m.setGrade(strArr[8]);
-			retObj.add(m);			
+			retObj.add(m);		
+			
 		}
 		return retObj;
 	}
