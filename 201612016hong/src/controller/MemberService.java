@@ -15,4 +15,5 @@ public interface MemberService {
 	
 	List<Member> findByAddress(String address);
 	List<Member> findByName(String Name);
+	List<Member> findByGrade(String grade);
 }

@@ -73,4 +73,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.searchByName(Name);
 	}
 
+	@Override
+	public List<Member> findByGrade(String grade) {
+		return memberDAO.searchByGrade(grade);
+	}
+	
+
 }

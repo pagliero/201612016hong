@@ -49,6 +49,17 @@ public class MemberDAO {
 		return searched;
 	}
 	
+	public List<Member> searchByGrade(String grade) { 
+		// 검색 결과를 저장할 ArrayList 형 객체 생성
+		List<Member> searched = new ArrayList<Member>();
+		for(Member m : memberList) {
+			if(m.getGrade().equals(grade)) {
+				searched.add(m); // 검색된 정보를 추가함
+			}
+			// 검색이 안된 경우 스킵
+		}				
+		return searched;
+	}
 	public List<Member> searchByName(String Name) { 
 		// 검색 결과를 저장할 ArrayList 형 객체 생성
 		List<Member> searched = new ArrayList<Member>();

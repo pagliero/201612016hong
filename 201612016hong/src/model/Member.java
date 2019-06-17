@@ -12,17 +12,18 @@ public class Member { // DB의 레코드와 매핑되는 객체
 	private StringProperty address; // 서울북부, 서울남부, 경기북부, 경기남부, 인천, 그외지역
 	private StringProperty contact;
 	private StringProperty gender;
+	private StringProperty grade;
 	
 	/*
     private final IntegerProperty zipcode;
     private ObjectProperty<LocalDate> birthday;
 	*/
 	public Member() {
-		this(" ", " ", " ", " ", " ", " ", " ", " ");
+		this(" ", " ", " ", " ", " ", " ", " ", " ", " ");
 	}
 	
 	public Member(String email, String pw, String name, String birth,
-			String age, String address, String contact, String gender) {
+			String age, String address, String contact, String gender, String grade) {
 		this.email = new SimpleStringProperty(email);
 		this.pw = new SimpleStringProperty(pw);
 		this.name = new SimpleStringProperty(name);
@@ -31,6 +32,7 @@ public class Member { // DB의 레코드와 매핑되는 객체
 		this.address = new SimpleStringProperty(address);
 		this.contact = new SimpleStringProperty(contact);
 		this.gender = new SimpleStringProperty(gender);
+		this.grade = new SimpleStringProperty(grade);
 	}
 
 	public String getEmail() {
@@ -43,9 +45,20 @@ public class Member { // DB의 레코드와 매핑되는 객체
     public StringProperty emailProperty() {
         return email;
     }
+    public String getGrade() {
+		return this.grade.get();
+	}
+	
+	public void setGrade(String grade) {
+		this.grade.set(grade);
+	}
+    public StringProperty gradeProperty() {
+        return grade;
+    }
     
     public String getPw() {
-		return this.pw.get();
+		return this.
+				pw.get();
 	}
 	
 	public void setPw(String pw) {

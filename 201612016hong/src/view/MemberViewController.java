@@ -28,6 +28,7 @@ public class MemberViewController implements Initializable {
 	@FXML	private Button btnCreate;
 	@FXML	private Button btnUpdate;
 	@FXML	private Button btnDelete;
+	@FXML	private Button btnFindByGrade;
 	
 	@FXML	private RadioButton male;
 	@FXML	private RadioButton female;
@@ -43,6 +44,7 @@ public class MemberViewController implements Initializable {
 	@FXML	private TextField tfBirth;
 	@FXML	private TextField tfAddress;
 	@FXML	private TextField tfContact;
+	@FXML	private TextField tfGrade;
 	
 	@FXML 	private TableView<Member> tableViewMember;
 	@FXML	private TableColumn<Member, String> columnEmail;
@@ -53,6 +55,7 @@ public class MemberViewController implements Initializable {
 	@FXML	private TableColumn<Member, String> columnAddress;
 	@FXML	private TableColumn<Member, String> columnContact;
 	@FXML	private TableColumn<Member, String> columnGender;
+	@FXML	private TableColumn<Member, String> columnGrade;
 	
 	// Member : model이라고도 하고 DTO, VO 라고도 함
 	// 시스템 밖에 저장된 정보를 객체들간에 사용하는 정보로 변환한 자료구조 또는 객체
@@ -79,16 +82,18 @@ public class MemberViewController implements Initializable {
 		columnAddress.setCellValueFactory(cvf -> cvf.getValue().addressProperty());
 		columnContact.setCellValueFactory(cvf -> cvf.getValue().contactProperty());
 		columnGender.setCellValueFactory(cvf -> cvf.getValue().genderProperty());
+		columnGrade.setCellValueFactory(cvf -> cvf.getValue().gradeProperty());
 		
 		tableViewMember.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showMemberInfo(newValue));
 
 		//fxml안에 이벤트 잇음.
-		//btnCreate.setOnMouseClicked(event -> handleCreate());	// 이넨트 연결은 1.initialize 2. fxml 둘 다 가능하다.
-		//btnUpdate.setOnMouseClicked(event -> handleUpdate());	// 이넨트 연결은 1.initialize 2. fxml 둘 다 가능하다.
+		btnCreate.setOnMouseClicked(event -> handleCreate());	// 이넨트 연결은 1.initialize 2. fxml 둘 다 가능하다.
+		btnUpdate.setOnMouseClicked(event -> handleUpdate());	// 이넨트 연결은 1.initialize 2. fxml 둘 다 가능하다.
 		
 		btnFindByAddress.setOnMouseClicked(event -> handleFindByAddress());	
 		btnFindByName.setOnMouseClicked(event -> handleFindByName());
+		btnFindByGrade.setOnMouseClicked(event -> handleFindByGrade());
 		
 		loadMemberTableView();
 	}
@@ -101,6 +106,7 @@ public class MemberViewController implements Initializable {
 			tfBirth.setText(member.getBirth());
 			tfAddress.setText(member.getAddress());
 			tfContact.setText(member.getContact());
+			tfGrade.setText(member.getGrade());
 			
 			if(member.getGender().equals("남자"))
 				male.setSelected(true);
@@ -179,6 +185,24 @@ private String ageCheck() {
 		else
 			this.showAlert("검색 조건을 입력하십시요");			
 	}
+	@FXML 
+	private void handleFindByGrade() {
+		String condition = tfFindCondition.getText();
+		taFindResult.setText("");
+		if(condition.length() > 0) {
+			List<Member> searched = memberService.findByGrade(condition);
+			if(searched.size() > 0) {
+				int no = 1;
+				for(Member m : searched) {
+					taFindResult.appendText(no++ + " ) " + m.getGrade() + " : " + m.getEmail() + " : " + m.getName() + " \n");
+				}
+			}
+			else
+				taFindResult.setText("검색 조건에 맞는 정보가 없습니다.");
+		}
+		else
+			this.showAlert("검색 조건을 입력하십시요");			
+	}
 	
 	@FXML 
 	private void handleFindByName() {
@@ -207,7 +231,7 @@ private String ageCheck() {
 			System.out.println("여자");
 		
 		Member newMember = new Member(tfEmail.getText(), tfPw.getText(), tfName.getText(), 
-				tfBirth.getText(), ageCheck(), tfAddress.getText(), tfContact.getText(), gender());
+				tfBirth.getText(), ageCheck(), tfAddress.getText(), tfContact.getText(), gender(),tfGrade.getText());
 
 		int selectedIndex = tableViewMember.getSelectionModel().getSelectedIndex();
 		
@@ -229,7 +253,7 @@ private String ageCheck() {
 	@FXML 
 	private void handleUpdate() {
 		Member newMember = new Member(tfEmail.getText(), tfPw.getText(), tfName.getText(), 
-				tfBirth.getText(), ageCheck(), tfAddress.getText(), tfContact.getText(), gender());
+				tfBirth.getText(), ageCheck(), tfAddress.getText(), tfContact.getText(), gender(),tfGrade.getText());
 
 		int selectedIndex = tableViewMember.getSelectionModel().getSelectedIndex();
 		
